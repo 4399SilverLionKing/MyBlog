@@ -1,7 +1,7 @@
 import { del, get, post, put } from './http'
 
 // 定义博客接口类型
-export interface Blog {
+export interface BlogApiInterface {
   id?: number
   title?: string
   desc?: string
@@ -9,7 +9,7 @@ export interface Blog {
   date?: string
   readCount?: number
   tags?: string[]
-  status?: number // 0: 草稿, 1: 已发布
+  status?: string // 0: 草稿, 1: 已发布
   content?: string // Markdown文件内容
 }
 
@@ -41,27 +41,27 @@ export interface PageResponse<T> {
  * 获取博客列表
  */
 export function getBlogList(params: BlogListParams) {
-  return get<ApiResponse<PageResponse<Blog>>>('/blogs', params)
+  return get<ApiResponse<PageResponse<BlogApiInterface>>>('/blogs', params)
 }
 
 /**
  * 获取博客详情
  */
 export function getBlogDetail(id: number | string) {
-  return get<ApiResponse<Blog>>(`/blogs/${id}`)
+  return get<ApiResponse<BlogApiInterface>>(`/blogs/${id}`)
 }
 
 /**
  * 创建博客
  */
-export function createBlog(blog: Blog) {
+export function createBlog(blog: BlogApiInterface) {
   return post<ApiResponse<null>>('/blogs', blog)
 }
 
 /**
  * 更新博客
  */
-export function putBlog(blog: Blog) {
+export function putBlog(blog: BlogApiInterface) {
   return put<ApiResponse<null>>('/blogs', blog)
 }
 

@@ -1,4 +1,4 @@
-import type { Blog, BlogListParams } from '~/apis/blogApi'
+import type { BlogApiInterface, BlogListParams } from '~/apis/blogApi'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import {
@@ -8,11 +8,21 @@ import {
   putBlog,
 } from '~/apis/blogApi'
 
+export interface BlogList {
+  id: number
+  title: string
+  desc: string
+  category: string
+  date: string
+  readCount: number
+  tags: string[]
+  status: string // 0: 草稿, 1: 已发布
+}
 // 定义博客Store
 export const useBlogStore = defineStore('blog', () => {
   // 状态
-  const blogs = ref<Blog[]>([])
-  const currentBlog = ref<Blog | null>(null)
+  const blogs = ref<BlogList[]>([])
+  const currentBlog = ref<BlogList | null>(null)
   const activeCategory = ref('all')
   const searchQuery = ref('')
   const loading = ref(false)
@@ -23,8 +33,15 @@ export const useBlogStore = defineStore('blog', () => {
   // Getters
   const filteredBlogs = computed(() => {
     return blogs.value.filter((blog) => {
-      const matchCategory = activeCategory.value === 'all' || blog.category === activeCategory.value
-      const matchSearch = blog.title?.toLowerCase().includes(searchQuery.value.toLowerCase()) || true
+      // 优化类别匹配逻辑
+      const matchCategory = activeCategory.value === 'all'
+        || blog.category === activeCategory.value
+
+      // 搜索匹配逻辑
+      const matchSearch = searchQuery.value === ''
+        || blog.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+        || blog.desc.toLowerCase().includes(searchQuery.value.toLowerCase())
+
       return matchCategory && matchSearch
     })
   })
@@ -42,7 +59,7 @@ export const useBlogStore = defineStore('blog', () => {
     return blogs.value.find(blog => blog.id === id) || null
   }
 
-  function setCurrentBlog(blog: Blog | null) {
+  function setCurrentBlog(blog: BlogList | null) {
     currentBlog.value = blog
   }
 
@@ -67,6 +84,7 @@ export const useBlogStore = defineStore('blog', () => {
           date: item.date?.split('T')[0] || new Date().toISOString().split('T')[0],
           readCount: item.readCount || 0,
           tags: item.tags || [],
+          status: item.status || '',
         }))
         currentPage.value = apiParams.page
         pageSize.value = apiParams.pageSize
@@ -83,7 +101,7 @@ export const useBlogStore = defineStore('blog', () => {
   }
 
   // 添加博客
-  async function addBlog(blogData: Omit<Blog, 'id'>) {
+  async function addBlog(blogData: BlogApiInterface) {
     loading.value = true
     try {
       const res = await createBlog(blogData)
@@ -103,10 +121,10 @@ export const useBlogStore = defineStore('blog', () => {
   }
 
   // 更新博客
-  async function updateBlog(blogData: Partial<Blog>) {
+  async function updateBlog(blogData: BlogApiInterface) {
     loading.value = true
     try {
-      const res = await putBlog(blogData as Blog)
+      const res = await putBlog(blogData as BlogList)
       if (res.code === 200) {
         // 成功后重新获取博客列表
         await fetchBlogs()

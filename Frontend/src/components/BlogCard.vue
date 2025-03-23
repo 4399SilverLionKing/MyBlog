@@ -1,15 +1,8 @@
 <script setup lang="ts">
-interface Blog {
-  id: number
-  title: string
-  desc: string
-  date: string
-  readCount: number
-  tags?: string[]
-}
+import type { BlogApiInterface } from '~/apis/blogApi'
 
 defineProps<{
-  blog: Blog
+  blog: BlogApiInterface
   showTags?: boolean // 是否显示标签
 }>()
 
@@ -21,7 +14,7 @@ defineEmits<{
 <template>
   <div
     class="group p-5 border border-white/10 rounded-xl bg-dark-900/50 cursor-pointer shadow-lg transition-all duration-300 hover:shadow-dark-950/50 hover:translate-y-[-4px]"
-    @click="$emit('click', blog.id)"
+    @click="blog.id !== undefined && $emit('click', blog.id)"
   >
     <div class="relative">
       <!-- 博客标题 -->

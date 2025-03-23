@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Blog } from '~/stores/blogStore'
+import type { BlogList } from '~/stores/blogStore'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import BlogCard from '~/components/BlogCard.vue'
@@ -26,13 +26,13 @@ const navItems = [
 // 获取置顶博客（拥有"置顶"标签的博客）
 const pinnedBlogs = computed(() => {
   return blogStore.blogs
-    .filter((blog: Blog) => blog.tags?.includes('置顶'))
+    .filter((blog: BlogList) => blog.tags?.includes('置顶'))
 })
 
 // 获取最新博客（根据日期排序，取前4篇）
 const recentBlogs = computed(() => {
   return [...blogStore.blogs]
-    .sort((a: Blog, b: Blog) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a: BlogList, b: BlogList) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 4) // 最新的4篇博客
 })
 
@@ -42,7 +42,6 @@ function navigateToBlog(blogId: number) {
   const blog = blogStore.getBlogById(blogId)
   if (blog) {
     blogStore.setCurrentBlog(blog)
-    blogStore.incrementReadCount(blogId)
     router.push('/front/detail')
   }
 }

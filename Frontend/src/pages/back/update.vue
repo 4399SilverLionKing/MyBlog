@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Blog } from '~/apis/blogApi'
+import type { BlogApiInterface } from '~/apis/blogApi'
 import { ElMessage } from 'element-plus'
 import { onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -27,20 +27,18 @@ const loading = ref(false)
 // 博客表单数据
 const blogForm = reactive<{
   title: string
-  content: string
-  summary: string
+  desc: string
   category: string
   tags: string
-  cover: string
-  status: number
+  status: string
+  content: string
 }>({
   title: '',
-  content: '',
-  summary: '',
+  desc: '',
   category: 'code',
   tags: '',
-  cover: '',
-  status: 1, // 默认已发布
+  status: '',
+  content: '',
 })
 
 // 分类选项
@@ -136,9 +134,9 @@ async function initEditor() {
     input: (value: string) => {
       blogForm.content = value
       // 如果摘要为空，自动截取内容前100个字符作为摘要
-      if (!blogForm.summary.trim()) {
+      if (!blogForm.desc?.trim()) {
         const text = value.replace(/[#*`>]/g, '').trim()
-        blogForm.summary = text.substring(0, 100)
+        blogForm.desc = text.substring(0, 100)
       }
     },
   })
@@ -158,7 +156,7 @@ async function loadBlogData(id: number) {
 
     // 填充表单
     blogForm.title = blog.title
-    blogForm.summary = blog.desc
+    blogForm.desc = blog.desc
     blogForm.category = blog.category
     blogForm.tags = blog.tags?.join(', ') || ''
 
@@ -197,10 +195,10 @@ async function saveBlog() {
     ? blogForm.tags.split(',').map(tag => tag.trim()).filter(Boolean)
     : []
 
-  const blogData: Blog = {
+  const blogData: BlogApiInterface = {
     title: blogForm.title,
     content: blogForm.content,
-    summary: blogForm.summary,
+    desc: blogForm.desc,
     category: blogForm.category,
     tags: tagsList,
     status: blogForm.status,
@@ -215,7 +213,7 @@ async function saveBlog() {
     }
     else if (blogId.value) {
       // 更新现有博客
-      await blogStore.updateBlog(blogId.value, blogData)
+      await blogStore.updateBlog(blogData)
       ElMessage.success('博客更新成功')
     }
 
@@ -313,7 +311,7 @@ function goBack() {
             <!-- 摘要 -->
             <div class="mb-5">
               <textarea
-                v-model="blogForm.summary"
+                v-model="blogForm.desc"
                 placeholder="博客摘要"
                 rows="2"
                 class="text-sm text-light-200 p-3 border border-white/10 rounded-lg bg-dark-800/70 w-full focus:outline-unset focus:ring-1 focus:ring-teal-500"

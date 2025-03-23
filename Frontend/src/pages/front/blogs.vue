@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import BlogCard from '~/components/BlogCard.vue'
 import { useBlogStore } from '~/stores/blogStore'
@@ -46,13 +46,14 @@ function navigateToDetail(blogId: number) {
   const blog = blogStore.getBlogById(blogId)
   if (blog) {
     blogStore.setCurrentBlog(blog)
-    blogStore.incrementReadCount(blogId)
     router.push('/front/detail')
   }
 }
 
 // 页面加载时获取博客列表
 onMounted(() => {
+  // 确保先设置默认分类
+  blogStore.setCategory('all')
   blogStore.fetchBlogs()
 })
 </script>

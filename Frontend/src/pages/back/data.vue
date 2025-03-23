@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Blog } from '~/stores/blogStore'
+import type { BlogList } from '~/stores/blogStore'
 import { computed } from 'vue'
 import SideBar from '~/components/SideBar.vue'
 import { useBlogStore } from '~/stores/blogStore'
@@ -19,13 +19,13 @@ const background = '/images/BlackSea.png'
 
 // 计算统计数据
 const totalBlogs = computed(() => blogStore.blogs.length)
-const totalReadCount = computed(() => blogStore.blogs.reduce((sum: number, blog: Blog) => sum + blog.readCount, 0))
-const totalTags = computed(() => new Set(blogStore.blogs.flatMap((blog: Blog) => blog.tags || [])).size)
+const totalReadCount = computed(() => blogStore.blogs.reduce((sum: number, blog: BlogList) => sum + blog.readCount, 0))
+const totalTags = computed(() => new Set(blogStore.blogs.flatMap((blog: BlogList) => blog.tags || [])).size)
 
 // 获取按分类分组的博客
 const blogsByCategory = computed(() => {
   const categories: Record<string, number> = {}
-  blogStore.blogs.forEach((blog: Blog) => {
+  blogStore.blogs.forEach((blog: BlogList) => {
     if (!categories[blog.category]) {
       categories[blog.category] = 0
     }
@@ -37,14 +37,14 @@ const blogsByCategory = computed(() => {
 // 获取阅读量最高的博客
 const topReadBlogs = computed(() => {
   return [...blogStore.blogs]
-    .sort((a: Blog, b: Blog) => b.readCount - a.readCount)
+    .sort((a: BlogList, b: BlogList) => b.readCount - a.readCount)
     .slice(0, 5)
 })
 
 // 获取标签统计
 const tagStats = computed(() => {
   const tags: Record<string, number> = {}
-  blogStore.blogs.forEach((blog: Blog) => {
+  blogStore.blogs.forEach((blog: BlogList) => {
     blog.tags?.forEach((tag: string) => {
       if (!tags[tag]) {
         tags[tag] = 0
