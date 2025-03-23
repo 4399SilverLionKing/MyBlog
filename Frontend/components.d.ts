@@ -8,11 +8,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppModal: typeof import('./src/components/AppModal.vue')['default']
+    AuthModal: typeof import('./src/components/AuthModal.vue')['default']
+    BlogCard: typeof import('./src/components/BlogCard.vue')['default']
+    Dialog: typeof import('./src/components/Dialog.vue')['default']
+    MessageNotification: typeof import('./src/components/MessageNotification.vue')['default']
+    Modal: typeof import('./src/components/Modal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheCounter: typeof import('./src/components/TheCounter.vue')['default']
-    TheFooter: typeof import('./src/components/TheFooter.vue')['default']
-    TheHeader: typeof import('./src/components/TheHeader.vue')['default']
-    TheInput: typeof import('./src/components/TheInput.vue')['default']
+    SideBar: typeof import('./src/components/SideBar.vue')['default']
+    Toast: typeof import('./src/components/Toast.vue')['default']
   }
 }

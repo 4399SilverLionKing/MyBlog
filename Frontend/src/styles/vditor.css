@@ -1,0 +1,186 @@
+/* 自定义Vditor样式以匹配深色主题 */
+.vditor-reset {
+  color: #e5e7eb;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  text-align: left;
+}
+
+.vditor-reset h1,
+.vditor-reset h2,
+.vditor-reset h3,
+.vditor-reset h4,
+.vditor-reset h5,
+.vditor-reset h6 {
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  margin-top: 1.7em;
+  margin-bottom: 1em;
+  line-height: 1.4;
+  font-weight: 600;
+  text-align: left;
+  padding-bottom: 0.3em;
+}
+
+.vditor-reset h1 {
+  font-size: 2.2em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.8em;
+  text-align: left;
+}
+
+.vditor-reset h2 {
+  font-size: 1.8em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+}
+
+.vditor-reset h3 {
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.vditor-reset h4 {
+  font-size: 1.3em;
+  text-align: left;
+}
+
+.vditor-reset h5 {
+  font-size: 1.15em;
+  text-align: left;
+}
+
+.vditor-reset h6 {
+  font-size: 1em;
+  color: #d1d5db;
+  text-align: left;
+}
+
+.vditor-reset a {
+  color: #5eead4;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(94, 234, 212, 0.5);
+  transition: color 0.2s ease;
+}
+
+.vditor-reset a:hover {
+  color: #34d399;
+  border-bottom: 1px dashed rgba(52, 211, 153, 0.7);
+}
+
+.vditor-reset blockquote {
+  border-left: 4px solid rgba(94, 234, 212, 0.5);
+  background-color: rgba(30, 41, 59, 0.5);
+  padding: 1em 1.2em;
+  margin: 1.5em 0;
+  border-radius: 0 0.3em 0.3em 0;
+  text-align: left;
+}
+
+.vditor-reset pre {
+  background-color: rgba(15, 23, 42, 0.7);
+  padding: 1.2em;
+  border-radius: 0.5em;
+  margin: 1.5em 0;
+  overflow-x: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.vditor-reset code {
+  background-color: rgba(30, 41, 59, 0.5);
+  color: #5eead4;
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+  font-family: 'Consolas', monospace;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.vditor-reset pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.95em;
+  line-height: 1.6;
+  display: block;
+  text-align: left;
+}
+
+.vditor-reset pre code * {
+  text-align: left;
+}
+
+.vditor-reset table {
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  width: 100%;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.vditor-reset th {
+  background-color: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75em 1em;
+  text-align: left;
+  font-weight: 600;
+}
+
+.vditor-reset td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75em 1em;
+  background-color: rgba(15, 23, 42, 0.3);
+  text-align: left;
+}
+
+.vditor-reset tr:nth-child(even) td {
+  background-color: rgba(15, 23, 42, 0.5);
+}
+
+.vditor-reset ul,
+.vditor-reset ol {
+  padding-left: 2em;
+  margin: 1em 0;
+  text-align: left;
+}
+
+.vditor-reset li {
+  margin: 0.5em 0;
+  text-align: left;
+}
+
+.vditor-reset img {
+  max-width: 100%;
+  border-radius: 0.5em;
+  margin: 1.5em 0;
+  display: block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.vditor-reset hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 2em 0;
+}
+
+.vditor-reset p {
+  margin: 1em 0;
+  text-align: left;
+}
+
+/* 确保代码内的所有内容也是左对齐 */
+.hljs {
+  text-align: left !important;
+}
+
+.hljs * {
+  text-align: left !important;
+}
+
+/* 覆盖可能的其他样式 */
+.vditor-reset * {
+  text-align: left;
+}

@@ -13,7 +13,12 @@
     "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@vueuse/core": "^12.8.0",
+    "axios": "^1.8.4",
+    "element-plus": "^2.9.7",
+    "pinia": "^3.0.1",
+    "vditor": "^3.10.9",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
