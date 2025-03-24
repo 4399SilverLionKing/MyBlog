@@ -11,6 +11,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import VueRouter from 'unplugin-vue-router/vite'
 import { defineConfig } from 'vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { VueMcp } from 'vite-plugin-vue-mcp'
 
 export default defineConfig({
   resolve: {
@@ -20,6 +21,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    VueMcp(),
     vueDevTools(),
     VueMacros({
       defineOptions: false,
