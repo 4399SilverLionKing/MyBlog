@@ -1,6 +1,6 @@
 package com.asta.blog.mapper;
 
-import com.asta.blog.entity.Blogs;
+import com.asta.blog.models.entity.Blogs;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 

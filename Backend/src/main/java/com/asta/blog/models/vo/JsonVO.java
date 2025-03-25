@@ -1,4 +1,4 @@
-package com.asta.blog.vo;
+package com.asta.blog.models.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

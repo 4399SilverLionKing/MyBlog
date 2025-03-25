@@ -1,4 +1,4 @@
-package com.asta.blog.entity;
+package com.asta.blog.models.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

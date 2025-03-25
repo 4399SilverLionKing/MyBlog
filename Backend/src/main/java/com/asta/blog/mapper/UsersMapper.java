@@ -1,6 +1,6 @@
 package com.asta.blog.mapper;
 
-import com.asta.blog.entity.Users;
+import com.asta.blog.models.entity.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.security.core.userdetails.User;
 import java.util.Optional;

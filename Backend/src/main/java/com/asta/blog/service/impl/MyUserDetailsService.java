@@ -37,14 +37,11 @@ public class MyUserDetailsService implements UserDetailsService {
 
         // 调用 userMapper 的 findByUsername 方法根据用户名从数据库中查找用户
         User user = userMapper.findByUsername(username)
-                // 如果找不到用户，则抛出 UsernameNotFoundException 异常，并提示用户不存在
                 .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
 
-        // 从 User 实体中获取用户的角色信息，并将其转换为 Spring Security 的 GrantedAuthority 集合
+        // 从 User 实体中获取用户的权限信息，并将其转换为 Spring Security 的 GrantedAuthority 集合
         Set<GrantedAuthority> authorities = user.getAuthorities().stream()
-                // 将每个角色名映射为 SimpleGrantedAuthority 对象，SimpleGrantedAuthority 是 GrantedAuthority 接口的一个简单实现类
                 .map((role) -> new SimpleGrantedAuthority(role.getAuthority()))
-                // 将所有 SimpleGrantedAuthority 对象收集到一个 Set 集合中
                 .collect(Collectors.toSet());
 
         // 创建 Spring Security 的 UserDetails 对象并返回
