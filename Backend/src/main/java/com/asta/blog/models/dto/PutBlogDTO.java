@@ -23,7 +23,7 @@ public class PutBlogDTO {
 
     private List<String> tags;
 
-    private String status;
+    private Integer status;
 
     private String content;
 }

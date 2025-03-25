@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,7 @@ public class PostBlogDTO {
 
     private String category;
 
-    private String date;
+    private LocalDateTime date;
 
     private List<String> tags;
 

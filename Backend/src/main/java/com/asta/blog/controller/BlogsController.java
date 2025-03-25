@@ -9,8 +9,7 @@ import com.asta.blog.service.impl.BlogsServiceImpl;
 import com.asta.blog.models.vo.BlogListVO;
 import com.asta.blog.models.vo.JsonVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -21,33 +20,38 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025-03-23
  */
 @RestController
-@RequestMapping("/blog/blogs")
+@RequestMapping("/blog")
 public class BlogsController implements BlogsApi {
 
     @Autowired
     BlogsServiceImpl service;
 
     @Override
+    @GetMapping("/blogs")
     public JsonVO<PageDTO<BlogListVO>> getBlogList(BlogListQuery query) {
+        return JsonVO.success(service.getBlogList(query)) ;
+    }
+
+    @Override
+    @GetMapping("/blogs/{id}")
+    public JsonVO<Byte[]> getBlogContent(@PathVariable Integer id) {
         return null;
     }
 
     @Override
-    public JsonVO<Byte[]> getBlogContent(Integer id) {
-        return null;
-    }
-
-    @Override
+    @PostMapping("/blogs")
     public JsonVO<Object> PostBlog(PostBlogDTO dto) {
         return null;
     }
 
     @Override
+    @PutMapping("/blogs")
     public JsonVO<Object> PutBlog(PutBlogDTO dto) {
         return null;
     }
 
     @Override
+    @DeleteMapping("/blogs")
     public JsonVO<Object> DeleteBlot(Integer id) {
         return null;
     }

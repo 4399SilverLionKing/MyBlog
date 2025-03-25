@@ -58,7 +58,7 @@ public class Blogs implements Serializable {
      * 博客阅读数量
      */
     @TableField("read_count")
-    private String readCount;
+    private Integer readCount;
 
     /**
      * 博客标签
@@ -70,7 +70,7 @@ public class Blogs implements Serializable {
      * 博客状态（0草稿、1发布）
      */
     @TableField("status")
-    private String status;
+    private Integer status;
 
     /**
      * 博客md文件云SDk

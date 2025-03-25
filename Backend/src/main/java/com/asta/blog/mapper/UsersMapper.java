@@ -3,6 +3,7 @@ package com.asta.blog.mapper;
 import com.asta.blog.models.entity.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.security.core.userdetails.User;
+import org.apache.ibatis.annotations.Mapper;
 import java.util.Optional;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Optional;
  * @author Asta
  * @since 2025-03-24
  */
+@Mapper
 public interface UsersMapper extends BaseMapper<Users> {
     Optional<User> findByUsername(String username);
 }

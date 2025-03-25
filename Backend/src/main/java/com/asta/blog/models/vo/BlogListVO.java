@@ -2,6 +2,7 @@ package com.asta.blog.models.vo;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,9 +18,9 @@ public class BlogListVO {
 
     private String category;
 
-    private String date;
+    private LocalDateTime date;
 
-    private String readCount;
+    private Integer readCount;
 
     private List<String> tags;
 
