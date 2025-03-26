@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,10 +38,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            // 禁用CSRF保护，因为我们使用JWT进行认证
+            .csrf(AbstractHttpConfigurer::disable)
+            // 启用CORS
+            .cors(cors -> cors.configure(http))
             // 配置授权规则
             .authorizeHttpRequests(auth -> auth
                 // 允许所有用户访问 /authenticate 端点，用于用户登录获取JWT
-                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/authenticate/**").permitAll()
                 // 允许所有用户访问 /public/** 下的所有端点，通常用于公开资源
                 .requestMatchers("/public/**").permitAll()
                 // 除以上permitAll配置的端点外，所有其他请求都需要认证

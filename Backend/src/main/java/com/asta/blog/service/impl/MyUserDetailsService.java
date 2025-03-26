@@ -1,6 +1,8 @@
 package com.asta.blog.service.impl;
 
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,6 +23,8 @@ import java.util.stream.Collectors;
 @Service 
 public class MyUserDetailsService implements UserDetailsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+
     @Resource
     private UsersMapper userMapper;
 
@@ -34,22 +38,27 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            // 调用 userMapper 的 findByUsername 方法根据用户名从数据库中查找用户
+            User user = userMapper.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
 
-        // 调用 userMapper 的 findByUsername 方法根据用户名从数据库中查找用户
-        User user = userMapper.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not exists by Username or Email"));
+            
+            // 从 User 实体中获取用户的权限信息，并将其转换为 Spring Security 的 GrantedAuthority 集合
+            Set<GrantedAuthority> authorities = user.getAuthorities().stream()
+                    .map((role) -> new SimpleGrantedAuthority(role.getAuthority()))
+                    .collect(Collectors.toSet());
 
-        // 从 User 实体中获取用户的权限信息，并将其转换为 Spring Security 的 GrantedAuthority 集合
-        Set<GrantedAuthority> authorities = user.getAuthorities().stream()
-                .map((role) -> new SimpleGrantedAuthority(role.getAuthority()))
-                .collect(Collectors.toSet());
-
-        // 创建 Spring Security 的 UserDetails 对象并返回
-        // UserDetails 是 Spring Security 定义的用户信息接口，包含了进行身份验证和授权所需的用户信息
-        return new org.springframework.security.core.userdetails.User(
-                username,              // 用户名
-                user.getPassword(),      // 密码
-                authorities             // 权限集合
-        );
+            
+            // 创建 Spring Security 的 UserDetails 对象并返回
+            // UserDetails 是 Spring Security 定义的用户信息接口，包含了进行身份验证和授权所需的用户信息
+            return new org.springframework.security.core.userdetails.User(
+                    username,              // 用户名
+                    user.getPassword(),      // 密码
+                    authorities             // 权限集合
+            );
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

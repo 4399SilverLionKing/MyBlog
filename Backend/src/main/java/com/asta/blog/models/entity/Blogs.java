@@ -39,8 +39,8 @@ public class Blogs implements Serializable {
     /**
      * 博客简介
      */
-    @TableField("desc")
-    private String desc;
+    @TableField("subtitle")
+    private String subtitle;
 
     /**
      * 博客类别

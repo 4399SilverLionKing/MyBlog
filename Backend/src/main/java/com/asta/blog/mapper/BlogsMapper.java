@@ -25,10 +25,14 @@ public interface BlogsMapper extends BaseMapper<Blogs> {
         //构建查询条件
         QueryWrapper<Blogs> wrapper = new QueryWrapper<>();
         wrapper.select()
-                .and(i->i.like("category",query.getCategory()))
-                .and(i->i.like("tag",query.getTags()))
-                .and(i->i.like("title",query.getKeyword()))
-                .and(i->i.eq("status",query.getStatus()));
+                .and(query.getCategory() != null && !query.getCategory().isEmpty(),
+                     i -> i.like("category", query.getCategory()))
+                .and(query.getTags() != null && !query.getTags().isEmpty(),
+                     i -> i.like("tags", query.getTags()))
+                .and(query.getKeyword() != null && !query.getKeyword().isEmpty(),
+                     i -> i.like("title", query.getKeyword()))
+                .and(query.getStatus() != null,
+                     i -> i.eq("status", query.getStatus()));
         return selectPage(page,wrapper);
     }
 }

@@ -15,7 +15,7 @@ public class PutBlogDTO {
 
     private String title;
 
-    private String desc;
+    private String subtitle;
 
     private String category;
 

@@ -11,7 +11,7 @@ import {
 export interface BlogList {
   id: number
   title: string
-  desc: string
+  subtitle: string
   category: string
   date: string
   readCount: number
@@ -40,7 +40,7 @@ export const useBlogStore = defineStore('blog', () => {
       // 搜索匹配逻辑
       const matchSearch = searchQuery.value === ''
         || blog.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-        || blog.desc.toLowerCase().includes(searchQuery.value.toLowerCase())
+        || blog.subtitle.toLowerCase().includes(searchQuery.value.toLowerCase())
 
       return matchCategory && matchSearch
     })
@@ -68,25 +68,25 @@ export const useBlogStore = defineStore('blog', () => {
     loading.value = true
     try {
       const apiParams: BlogListParams = {
-        page: params?.page || currentPage.value,
+        pageIndex: params?.pageIndex || currentPage.value,
         pageSize: params?.pageSize || pageSize.value,
         keyword: params?.keyword || searchQuery.value,
         category: params?.category || (activeCategory.value === 'all' ? undefined : activeCategory.value),
       }
 
       const res = await getBlogList(apiParams)
-      if (res.code === 200) {
-        blogs.value = res.data.list.map(item => ({
+      if (res.code === 10000) {
+        blogs.value = res.data.rows.map(item => ({
           id: item.id || 0,
           title: item.title || '',
-          desc: item.desc || '',
-          category: item.category || 'code',
+          subtitle: item.subtitle || '',
+          category: item.category?.toLowerCase() || 'code',
           date: item.date?.split('T')[0] || new Date().toISOString().split('T')[0],
           readCount: item.readCount || 0,
           tags: item.tags || [],
           status: item.status || '',
         }))
-        currentPage.value = apiParams.page
+        currentPage.value = apiParams.pageIndex
         pageSize.value = apiParams.pageSize
       }
       return res
@@ -105,7 +105,7 @@ export const useBlogStore = defineStore('blog', () => {
     loading.value = true
     try {
       const res = await createBlog(blogData)
-      if (res.code === 200) {
+      if (res.code === 10000) {
         // 成功后重新获取博客列表
         await fetchBlogs()
       }
@@ -125,7 +125,7 @@ export const useBlogStore = defineStore('blog', () => {
     loading.value = true
     try {
       const res = await putBlog(blogData as BlogList)
-      if (res.code === 200) {
+      if (res.code === 10000) {
         // 成功后重新获取博客列表
         await fetchBlogs()
       }
@@ -145,7 +145,7 @@ export const useBlogStore = defineStore('blog', () => {
     loading.value = true
     try {
       const res = await deleteBlog(id)
-      if (res.code === 200) {
+      if (res.code === 10000) {
         // 成功后重新获取博客列表
         await fetchBlogs()
       }

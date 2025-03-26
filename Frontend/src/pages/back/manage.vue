@@ -196,7 +196,7 @@ const categories = [
                     {{ blog.title }}
                   </h3>
                   <p class="text-sm text-light-400 mt-1 line-clamp-1">
-                    {{ blog.desc }}
+                    {{ blog.subtitle }}
                   </p>
                   <div class="mt-2 flex flex-wrap gap-1 justify-center">
                     <span

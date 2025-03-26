@@ -20,39 +20,41 @@ import org.springframework.web.bind.annotation.*;
  * @since 2025-03-23
  */
 @RestController
-@RequestMapping("/blog")
 public class BlogsController implements BlogsApi {
 
     @Autowired
     BlogsServiceImpl service;
 
     @Override
-    @GetMapping("/blogs")
+    @GetMapping("public/blogs")
     public JsonVO<PageDTO<BlogListVO>> getBlogList(BlogListQuery query) {
         return JsonVO.success(service.getBlogList(query)) ;
     }
 
     @Override
-    @GetMapping("/blogs/{id}")
+    @GetMapping("public/blogs/{id}")
     public JsonVO<Byte[]> getBlogContent(@PathVariable Integer id) {
         return null;
     }
 
     @Override
     @PostMapping("/blogs")
-    public JsonVO<Object> PostBlog(PostBlogDTO dto) {
-        return null;
+    public JsonVO<Object> PostBlog(@RequestBody PostBlogDTO dto) {
+        service.PostBlog(dto);
+        return JsonVO.success(null);
     }
 
     @Override
     @PutMapping("/blogs")
-    public JsonVO<Object> PutBlog(PutBlogDTO dto) {
-        return null;
+    public JsonVO<Object> PutBlog(@RequestBody PutBlogDTO dto) {
+        service.PutBlog(dto);
+        return JsonVO.success(null);
     }
 
     @Override
-    @DeleteMapping("/blogs")
-    public JsonVO<Object> DeleteBlot(Integer id) {
-        return null;
+    @DeleteMapping("/blogs/{id}")
+    public JsonVO<Object> DeleteBlog(@PathVariable Integer id) {
+        service.DeleteBlog(id);
+        return JsonVO.success(null);
     }
 }

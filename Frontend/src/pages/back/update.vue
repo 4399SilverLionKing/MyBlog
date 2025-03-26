@@ -35,7 +35,7 @@ const blogForm = reactive<{
 }>({
   title: '',
   desc: '',
-  category: 'code',
+  category: '',
   tags: '',
   status: '',
   content: '',
@@ -46,6 +46,11 @@ const categories = [
   { label: '代码', value: 'code' },
   { label: '阅读', value: 'read' },
   { label: '生活', value: 'life' },
+]
+// 状态选项
+const statusOptions = [
+  { label: '草稿', value: '0' },
+  { label: '发布', value: '1' },
 ]
 
 // 在组件加载时初始化编辑器并检查是否为编辑模式
@@ -156,10 +161,10 @@ async function loadBlogData(id: number) {
 
     // 填充表单
     blogForm.title = blog.title
-    blogForm.desc = blog.desc
+    blogForm.desc = blog.subtitle
     blogForm.category = blog.category
     blogForm.tags = blog.tags?.join(', ') || ''
-
+    blogForm.status = blog.status
     // 注意：Blog类型中没有content属性，这里暂时使用空字符串
     // 实际项目中可能需要通过API单独获取博客内容
     blogForm.content = ''
@@ -192,13 +197,13 @@ async function saveBlog() {
 
   // 处理标签
   const tagsList = blogForm.tags
-    ? blogForm.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+    ? blogForm.tags.split('，').map(tag => tag.trim()).filter(Boolean)
     : []
 
   const blogData: BlogApiInterface = {
     title: blogForm.title,
     content: blogForm.content,
-    desc: blogForm.desc,
+    subtitle: blogForm.desc,
     category: blogForm.category,
     tags: tagsList,
     status: blogForm.status,
@@ -212,8 +217,11 @@ async function saveBlog() {
       ElMessage.success('博客创建成功')
     }
     else if (blogId.value) {
-      // 更新现有博客
-      await blogStore.updateBlog(blogData)
+      // 更新现有博客 - 添加ID到更新数据中
+      await blogStore.updateBlog({
+        id: blogId.value,
+        ...blogData,
+      })
       ElMessage.success('博客更新成功')
     }
 
@@ -298,11 +306,8 @@ function goBack() {
                   v-model="blogForm.status"
                   class="text-sm text-light-200 px-4 py-2 border border-white/10 rounded-lg bg-dark-800/70 w-full focus:outline-unset focus:ring-1 focus:ring-teal-500"
                 >
-                  <option :value="0">
-                    草稿
-                  </option>
-                  <option :value="1">
-                    发布
+                  <option v-for="status in statusOptions" :key="status.value" :value="status.value">
+                    {{ status.label }}
                   </option>
                 </select>
               </div>

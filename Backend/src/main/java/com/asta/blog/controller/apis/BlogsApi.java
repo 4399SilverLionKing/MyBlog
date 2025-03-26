@@ -41,5 +41,5 @@ public interface BlogsApi {
      * @param id 博客id
      * @return null
      */
-    public JsonVO<Object> DeleteBlot(Integer id);
+    public JsonVO<Object> DeleteBlog(Integer id);
 }

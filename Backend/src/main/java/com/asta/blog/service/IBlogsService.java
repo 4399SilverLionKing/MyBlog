@@ -47,6 +47,6 @@ public interface IBlogsService extends IService<Blogs> {
      * 删除博客
      * @param id 博客id
      */
-    public void DeleteBlot(Integer id);
+    public void DeleteBlog(Integer id);
 
 }

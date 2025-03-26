@@ -4,7 +4,7 @@ import { del, get, post, put } from './http'
 export interface BlogApiInterface {
   id?: number
   title?: string
-  desc?: string
+  subtitle?: string
   category?: string
   date?: string
   readCount?: number
@@ -15,7 +15,7 @@ export interface BlogApiInterface {
 
 // 获取博客列表的参数接口
 export interface BlogListParams {
-  page: number
+  pageIndex: number
   pageSize: number
   category?: string
   tag?: string
@@ -32,23 +32,23 @@ export interface ApiResponse<T> {
 
 // 定义分页数据的通用结构
 export interface PageResponse<T> {
-  page: number
+  pageIndex: number
   pageSize: number
-  list: T[]
+  rows: T[]
 }
 
 /**
  * 获取博客列表
  */
 export function getBlogList(params: BlogListParams) {
-  return get<ApiResponse<PageResponse<BlogApiInterface>>>('/blogs', params)
+  return get<ApiResponse<PageResponse<BlogApiInterface>>>('/public/blogs', params)
 }
 
 /**
  * 获取博客详情
  */
 export function getBlogDetail(id: number | string) {
-  return get<ApiResponse<BlogApiInterface>>(`/blogs/${id}`)
+  return get<ApiResponse<BlogApiInterface>>(`/public/blogs/${id}`)
 }
 
 /**

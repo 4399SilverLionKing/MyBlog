@@ -38,6 +38,17 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.2.22</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.2.6</version>
+		</dependency>
 		<!-- redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,12 +59,6 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>33.4.5-jre</version>
-		</dependency>
-		<!-- gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.12.1</version>
 		</dependency>
 		<!-- mybatis plus + code generator -->
 		<dependency>
@@ -118,6 +123,12 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${org.mapstruct.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
 		</dependency>
 		<!-- starters -->
 		<!-- web -->

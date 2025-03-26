@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
+import { useUserStore } from '../stores/userStore'
 
 defineProps<{
   show: boolean
@@ -11,25 +12,35 @@ const emit = defineEmits<{
   (e: 'authSuccess'): void
 }>()
 
+const userStore = useUserStore()
 const username = ref('')
 const password = ref('')
 const loading = ref(false)
 
-function authenticate() {
+async function authenticate() {
   loading.value = true
 
-  // 模拟认证过程
-  setTimeout(() => {
-    loading.value = false
+  try {
+    const success = await userStore.loginUser({
+      userName: username.value,
+      userPassword: password.value,
+    })
 
-    // 简单认证逻辑 (实际项目中应使用更安全的方式)
-    if (username.value === 'admin' && password.value === 'admin') {
+    if (success) {
+      ElMessage.success('登录成功')
       emit('authSuccess')
     }
     else {
       ElMessage.error('用户名或密码错误')
     }
-  }, 800)
+  }
+  catch (error) {
+    console.error('登录出错:', error)
+    ElMessage.error('登录失败，请稍后重试')
+  }
+  finally {
+    loading.value = false
+  }
 }
 
 function closeModal() {

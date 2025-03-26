@@ -27,10 +27,10 @@ defineEmits<{
 
       <!-- 博客描述 -->
       <p
-        v-if="blog.desc"
+        v-if="blog.subtitle"
         class="text-sm text-light-300/90 mb-3 transition-all duration-300 line-clamp-2 group-hover:text-light-200"
       >
-        {{ blog.desc }}
+        {{ blog.subtitle }}
       </p>
 
       <!-- 元数据区域 -->
