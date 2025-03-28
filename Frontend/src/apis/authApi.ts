@@ -15,5 +15,5 @@ export interface LoginResponse {
  * 用户登录
  */
 export function login(params: LoginParams): Promise<ApiResponse<LoginResponse>> {
-  return post<ApiResponse<LoginResponse>>('/authenticate/login', params)
+  return post<ApiResponse<LoginResponse>>('/api/authenticate/login', params)
 }

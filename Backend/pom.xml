@@ -174,7 +174,7 @@
 					<!-- Docker 远程管理地址-->
 					<dockerHost>https://182.92.222.108:2375</dockerHost>
 					<!-- CA 证书位置 -->
-					<certPath>/home/docker-ca</certPath>
+					<certPath>D:\Docker\blog-backend-ca</certPath>
 					<!-- 镜像设置 -->
 					<images>
 						<image>
