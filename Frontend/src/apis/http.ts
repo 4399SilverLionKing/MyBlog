@@ -71,6 +71,10 @@ service.interceptors.response.use(
     }
     else if (error.response && error.response.status === 403) {
       ElMessage.error('没有操作权限')
+      // 添加1秒延迟后再跳转
+      setTimeout(() => {
+        window.location.href = '/'
+      }, 1000)
     }
     else if (error.response && error.response.status === 404) {
       ElMessage.error('请求的资源不存在')

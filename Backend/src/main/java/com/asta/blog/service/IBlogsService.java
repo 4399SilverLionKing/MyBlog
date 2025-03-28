@@ -5,7 +5,9 @@ import com.asta.blog.models.entity.Blogs;
 import com.asta.blog.models.query.BlogListQuery;
 import com.asta.blog.models.dto.PostBlogDTO;
 import com.asta.blog.models.dto.PutBlogDTO;
+import com.asta.blog.models.vo.GetBlogContentVO;
 import com.asta.blog.models.vo.BlogListVO;
+import com.asta.blog.models.vo.PostBlogVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -26,22 +28,25 @@ public interface IBlogsService extends IService<Blogs> {
 
     /**
      * 获取博客内容
-     * @param id 博客id
+     * @param key 博客key
      * @return md文件
      */
-    public Byte[] getBlogContent(Integer id);
+    public GetBlogContentVO getBlogContent(String key);
 
     /**
      * 添加博客
+     *
      * @param dto 博客内容
+     * @return 上传token
      */
-    public void PostBlog(PostBlogDTO dto);
+    public PostBlogVO PostBlog(PostBlogDTO dto);
 
     /**
      * 修改博客
      * @param dto 修改内容
+     * @return 上传token
      */
-    public void PutBlog(PutBlogDTO dto);
+    public String PutBlog(PutBlogDTO dto);
 
     /**
      * 删除博客

@@ -1,4 +1,5 @@
 import type { BlogApiInterface, BlogListParams } from '~/apis/blogApi'
+import axios from 'axios'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import {
@@ -7,6 +8,7 @@ import {
   getBlogList,
   putBlog,
 } from '~/apis/blogApi'
+import { getSignedDownloadUrl, postBlogContent, updateBlogContent } from '~/apis/qiniuApi'
 
 export interface BlogList {
   id: number
@@ -101,13 +103,17 @@ export const useBlogStore = defineStore('blog', () => {
   }
 
   // 添加博客
-  async function addBlog(blogData: BlogApiInterface) {
+  async function addBlog(blogData: BlogApiInterface, blogContent: string) {
     loading.value = true
     try {
       const res = await createBlog(blogData)
       if (res.code === 10000) {
         // 成功后重新获取博客列表
         await fetchBlogs()
+        if (res.data.id && res.data.token && blogContent) {
+          // 上传博客内容到七牛云
+          await postBlogContent(res.data.id, blogContent, res.data.token)
+        }
       }
       return res
     }
@@ -121,13 +127,18 @@ export const useBlogStore = defineStore('blog', () => {
   }
 
   // 更新博客
-  async function updateBlog(blogData: BlogApiInterface) {
+  async function updateBlog(blogData: BlogApiInterface, blogContent: string) {
     loading.value = true
     try {
-      const res = await putBlog(blogData as BlogList)
+      const res = await putBlog(blogData)
       if (res.code === 10000) {
         // 成功后重新获取博客列表
         await fetchBlogs()
+        console.warn('开始上传')
+        // 如果有内容，上传到七牛云
+        if (res.data && blogData.id && blogContent) {
+          await updateBlogContent(blogData.id, blogContent, res.data)
+        }
       }
       return res
     }
@@ -160,6 +171,42 @@ export const useBlogStore = defineStore('blog', () => {
     }
   }
 
+  // 从七牛云获取博客内容
+  async function getBlogContent(id: number) {
+    try {
+      // 获取博客的key
+      const blogKey = `${id}.md`
+
+      // 获取七牛云带签名的下载地址
+      const signedUrlResponse = await getSignedDownloadUrl(blogKey)
+
+      if (signedUrlResponse.code === 10000 && signedUrlResponse.data.url) {
+        // 使用获取到的签名URL下载博客内容
+        const contentResponse = await axios.get(signedUrlResponse.data.url)
+        return {
+          success: true,
+          content: contentResponse.data,
+        }
+      }
+      else {
+        console.error('获取七牛云下载链接失败')
+        return {
+          success: false,
+          content: '',
+          message: '获取博客内容失败，请检查网络连接',
+        }
+      }
+    }
+    catch (error) {
+      console.error('获取博客内容失败:', error)
+      return {
+        success: false,
+        content: '',
+        message: '获取博客内容失败，请检查网络连接',
+      }
+    }
+  }
+
   return {
     blogs,
     currentBlog,
@@ -178,5 +225,6 @@ export const useBlogStore = defineStore('blog', () => {
     addBlog,
     updateBlog,
     removeBlog,
+    getBlogContent,
   }
 })

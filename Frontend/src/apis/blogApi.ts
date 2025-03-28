@@ -37,6 +37,12 @@ export interface PageResponse<T> {
   rows: T[]
 }
 
+// 定义新建博客返回结果
+export interface NewBlogResponse {
+  id: number
+  token: string
+}
+
 /**
  * 获取博客列表
  */
@@ -45,24 +51,17 @@ export function getBlogList(params: BlogListParams) {
 }
 
 /**
- * 获取博客详情
- */
-export function getBlogDetail(id: number | string) {
-  return get<ApiResponse<BlogApiInterface>>(`/public/blogs/${id}`)
-}
-
-/**
  * 创建博客
  */
 export function createBlog(blog: BlogApiInterface) {
-  return post<ApiResponse<null>>('/blogs', blog)
+  return post<ApiResponse<NewBlogResponse>>('/blogs', blog)
 }
 
 /**
  * 更新博客
  */
 export function putBlog(blog: BlogApiInterface) {
-  return put<ApiResponse<null>>('/blogs', blog)
+  return put<ApiResponse<string>>('/blogs', blog)
 }
 
 /**

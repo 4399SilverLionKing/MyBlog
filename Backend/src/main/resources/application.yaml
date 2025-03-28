@@ -37,6 +37,11 @@ server:
 jwt:
   secret: 5468576D5A7134743777217A25432A462D4A614E645267556A586E3272357538 # 随机生成的安全密钥，BASE64编码
   expiration: 86400000 # 24小时过期时间，单位为毫秒
+qiniu:
+  accessKey: ISFGdWmsT_4to-ha5FYqvEkJ24tL0CrF2T-Jrgyn
+  secretKey: Y1q5a5g3UByQko5Xep5ed6twAEjWQ-R-LtDeiyGw
+  bucket: sanyeyeye
+  domain: qiniu.sanyeyeye.xyz
 
 # 添加日志配置
 logging:

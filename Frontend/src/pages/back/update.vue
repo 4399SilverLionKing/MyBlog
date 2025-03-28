@@ -165,13 +165,29 @@ async function loadBlogData(id: number) {
     blogForm.category = blog.category
     blogForm.tags = blog.tags?.join(', ') || ''
     blogForm.status = blog.status
-    // 注意：Blog类型中没有content属性，这里暂时使用空字符串
-    // 实际项目中可能需要通过API单独获取博客内容
-    blogForm.content = ''
 
-    // 如果编辑器已初始化，设置内容
-    if (vditor.value) {
-      vditor.value.setValue(blogForm.content)
+    // 从七牛云获取博客内容
+    try {
+      // 使用store的方法从七牛云获取博客内容
+      const contentResult = await blogStore.getBlogContent(id)
+
+      if (contentResult.success) {
+        blogForm.content = contentResult.content
+
+        // 如果编辑器已初始化，设置内容
+        if (vditor.value) {
+          vditor.value.setValue(blogForm.content)
+        }
+      }
+      else {
+        ElMessage.warning(contentResult.message || '获取博客内容失败')
+        blogForm.content = ''
+      }
+    }
+    catch (error) {
+      console.error('获取博客内容失败:', error)
+      ElMessage.warning('获取博客内容失败，请检查网络连接')
+      blogForm.content = ''
     }
   }
   catch (error) {
@@ -186,58 +202,57 @@ async function loadBlogData(id: number) {
 // 保存博客
 async function saveBlog() {
   if (!blogForm.title.trim()) {
-    ElMessage.error('博客标题不能为空')
+    ElMessage.warning('请输入博客标题')
     return
-  }
-
-  if (!blogForm.content.trim()) {
-    ElMessage.error('博客内容不能为空')
-    return
-  }
-
-  // 处理标签
-  const tagsList = blogForm.tags
-    ? blogForm.tags.split('，').map(tag => tag.trim()).filter(Boolean)
-    : []
-
-  const blogData: BlogApiInterface = {
-    title: blogForm.title,
-    content: blogForm.content,
-    subtitle: blogForm.desc,
-    category: blogForm.category,
-    tags: tagsList,
-    status: blogForm.status,
   }
 
   loading.value = true
   try {
-    if (isCreate.value) {
-      // 创建新博客
-      await blogStore.addBlog(blogData)
-      ElMessage.success('博客创建成功')
-    }
-    else if (blogId.value) {
-      // 更新现有博客 - 添加ID到更新数据中
-      await blogStore.updateBlog({
-        id: blogId.value,
-        ...blogData,
-      })
-      ElMessage.success('博客更新成功')
+    // 准备博客数据
+    const blogData: BlogApiInterface = {
+      title: blogForm.title,
+      subtitle: blogForm.desc,
+      category: blogForm.category,
+      status: blogForm.status,
+      tags: blogForm.tags.split('，').map(tag => tag.trim()).filter(tag => tag),
     }
 
-    // 返回管理页面
+    // 如果是编辑模式，添加ID
+    if (blogId.value) {
+      blogData.id = blogId.value
+    }
+
+    let result
+    // 根据模式调用不同的API
+    if (isCreate.value) {
+      // 创建新博客，同时上传内容
+      result = await blogStore.addBlog(blogData, blogForm.content)
+      if (result.code !== 10000) {
+        ElMessage.error('创建博客失败')
+        return
+      }
+    }
+    else {
+      // 更新现有博客，同时上传内容
+      result = await blogStore.updateBlog(blogData, blogForm.content)
+      if (result.code !== 10000) {
+        ElMessage.error('更新博客失败')
+        return
+      }
+    }
+
+    // 跳转到博客列表页
     router.push('/back/manage')
   }
   catch (error) {
     console.error('保存博客失败:', error)
-    ElMessage.error(`保存失败: ${(error as Error).message}`)
   }
   finally {
     loading.value = false
   }
 }
 
-// 返回管理页面
+// 返回上一页
 function goBack() {
   router.push('/back/manage')
 }

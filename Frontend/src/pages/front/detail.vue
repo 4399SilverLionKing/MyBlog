@@ -18,7 +18,7 @@ const currentBlog = computed(() => blogStore.currentBlog)
 // 博客数据
 const blogTitle = computed(() => currentBlog.value?.title || '加载中...')
 const blogDate = computed(() => currentBlog.value?.date || '')
-const blogReadCount = computed(() => currentBlog.value?.readCount || '')
+const blogReadCount = computed(() => currentBlog.value?.readCount)
 const isLoading = ref(true)
 const blogContent = ref('')
 
@@ -29,105 +29,35 @@ const navItems = [
   { icon: 'i-carbon-user', label: 'About Me', goto: '/front/about' },
 ]
 
-// 这里直接提供一个示例Markdown内容
-// 不再使用模板字符串，直接使用实际Markdown内容
-const sampleMarkdown = `# Vue3最佳实践指南
-
-## 前言
-
-Vue3 是 Vue.js 的最新主要版本，它带来了许多激动人心的新特性和性能改进。本文将带你了解使用 Vue3 的最佳实践。
-
-## 组合式API (Composition API)
-
-组合式API是Vue3最核心的特性之一，它允许我们按照逻辑关注点组织代码。
-
-### 基本使用
-
-\`\`\`javascript
-import { ref, computed, onMounted } from 'vue'
-
-export default {
-  setup() {
-    // 响应式状态
-    const count = ref(0)
-
-    // 计算属性
-    const doubleCount = computed(() => count.value * 2)
-
-    // 方法
-    function increment() {
-      count.value++
-    }
-
-    // 生命周期钩子
-    onMounted(() => {
-      console.log('Component mounted!')
-    })
-
-    // 暴露给模板
-    return {
-      count,
-      doubleCount,
-      increment
-    }
-  }
-}
-\`\`\`
-
-### script setup语法糖
-
-\`\`\`vue
-
-
-<template>
-  <button @click="increment">Count: {{ count }}</button>
-  <p>Double count: {{ doubleCount }}</p>
-</template>
-\`\`\`
-
-## 性能优化
-
-### 1. 使用\`v-memo\`缓存模板部分
-
-\`\`\`vue
-<template>
-  <div v-memo="[item.id, selected]">
-    <!-- 只有当item.id或selected变化时才会更新这部分模板 -->
-  </div>
-</template>
-\`\`\`
-
-### 2. 异步组件和Suspense
-
-\`\`\`javascript
-import { defineAsyncComponent } from 'vue'
-
-const AsyncComponent = defineAsyncComponent(() =>
-  import('./components/AsyncComponent.vue')
-)
-\`\`\`
-
-## 总结
-
-Vue3的组合式API、性能优化和TypeScript支持使得开发大型应用程序更加高效和可维护。积极采用这些最佳实践，将会极大提升您的开发体验。
-
-希望本文对您有所帮助！`
-
-// Vditor实例
+// 预览元素
 let previewElement: HTMLDivElement | null = null
 
-// 加载博客内容
-function loadBlogDetail() {
+// 从七牛云获取博客内容
+async function loadBlogDetail() {
   isLoading.value = true
   try {
-    // 检查store中是否有当前博客
-    if (currentBlog.value) {
-      // 直接使用store中的数据
-      blogContent.value = sampleMarkdown
+    // 检查store中是否有当前博客和ID
+    if (currentBlog.value && currentBlog.value.id) {
+      try {
+        // 使用store方法获取博客内容
+        const contentResult = await blogStore.getBlogContent(currentBlog.value.id)
+
+        if (contentResult.success) {
+          blogContent.value = contentResult.content
+        }
+        else {
+          console.error('获取博客内容失败')
+          blogContent.value = ''
+        }
+      }
+      catch (error) {
+        console.error('获取博客内容失败:', error)
+        blogContent.value = ''
+      }
     }
     else {
-      console.warn('未找到当前博客数据，使用示例内容')
-      blogContent.value = sampleMarkdown
+      console.warn('未找到当前博客数据')
+      blogContent.value = ''
     }
 
     // 使用nextTick确保DOM已更新后再渲染Markdown
