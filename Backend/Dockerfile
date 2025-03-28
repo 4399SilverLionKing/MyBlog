@@ -1,5 +1,5 @@
 # 该镜像需要依赖的基础镜像
-FROM openjdk:8
+FROM openjdk:17
 # 指定维护者的名字
 MAINTAINER Asta
 # 将当前target目录下的jar包复制到docker容器中
