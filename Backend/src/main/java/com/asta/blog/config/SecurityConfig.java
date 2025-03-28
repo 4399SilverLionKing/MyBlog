@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,8 +41,8 @@ public class SecurityConfig {
         http
             // 禁用CSRF保护，因为我们使用JWT进行认证
             .csrf(AbstractHttpConfigurer::disable)
-            // 启用CORS
-            .cors(cors -> cors.configure(http))
+            // 启用CORS，使用WebConfig中的配置
+            .cors(cors -> {})
             // 配置授权规则
             .authorizeHttpRequests(auth -> auth
                 // 允许所有用户访问 /authenticate 端点，用于用户登录获取JWT
