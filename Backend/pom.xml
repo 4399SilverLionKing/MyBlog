@@ -192,7 +192,7 @@
 								<namingStrategy>alias</namingStrategy>
 								<!-- 端口映射 -->
 								<ports>
-									<port>11000:11000</port>
+									<port>4444:4444</port>
 								</ports>
 								<!-- 数据卷 -->
 								<volumes>
