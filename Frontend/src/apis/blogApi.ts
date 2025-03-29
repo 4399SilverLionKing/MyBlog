@@ -47,26 +47,26 @@ export interface NewBlogResponse {
  * 获取博客列表
  */
 export function getBlogList(params: BlogListParams) {
-  return get<ApiResponse<PageResponse<BlogApiInterface>>>('/api/public/blogs', params)
+  return get<ApiResponse<PageResponse<BlogApiInterface>>>('/public/blogs', params)
 }
 
 /**
  * 创建博客
  */
 export function createBlog(blog: BlogApiInterface) {
-  return post<ApiResponse<NewBlogResponse>>('/api/blogs', blog)
+  return post<ApiResponse<NewBlogResponse>>('/blogs', blog)
 }
 
 /**
  * 更新博客
  */
 export function putBlog(blog: BlogApiInterface) {
-  return put<ApiResponse<string>>('/api/blogs', blog)
+  return put<ApiResponse<string>>('/blogs', blog)
 }
 
 /**
  * 删除博客
  */
 export function deleteBlog(id: number | string) {
-  return del<ApiResponse<null>>(`/api/blogs/${id}`)
+  return del<ApiResponse<null>>(`/blogs/${id}`)
 }
