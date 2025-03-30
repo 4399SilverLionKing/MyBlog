@@ -207,6 +207,39 @@ export const useBlogStore = defineStore('blog', () => {
     }
   }
 
+  // 增加博客阅读量
+  async function updateReadCount(id: number) {
+    try {
+      const blog = blogs.value.find(b => b.id === id)
+      if (!blog)
+        return
+
+      // 创建要更新的博客对象，只包含必要的字段
+      const blogData: BlogApiInterface = {
+        id: blog.id,
+        readCount: (blog.readCount || 0) + 1,
+      }
+
+      const res = await putBlog(blogData)
+      if (res.code === 10000) {
+        // 更新本地博客列表中的阅读量
+        if (blog) {
+          blog.readCount += 1
+        }
+
+        // 更新当前博客的阅读量（如果当前显示的正是这篇博客）
+        if (currentBlog.value && currentBlog.value.id === id) {
+          currentBlog.value.readCount += 1
+        }
+      }
+      return res
+    }
+    catch (error) {
+      console.error('更新阅读量失败:', error)
+      throw error
+    }
+  }
+
   return {
     blogs,
     currentBlog,
@@ -226,5 +259,6 @@ export const useBlogStore = defineStore('blog', () => {
     updateBlog,
     removeBlog,
     getBlogContent,
+    updateReadCount,
   }
 })
