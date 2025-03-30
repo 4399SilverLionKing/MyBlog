@@ -118,4 +118,16 @@ public class BlogsServiceImpl extends ServiceImpl<BlogsMapper, Blogs> implements
         }
         baseMapper.deleteById(id);
     }
+
+    @Override
+    public void updateBlogReadCount(Integer id) {
+        Blogs blog = baseMapper.selectById(id);
+        if (blog != null) {
+            blog.setReadCount(blog.getReadCount() + 1);
+            baseMapper.updateById(blog);
+            logger.info("更新博客 ID: {} 的阅读量为: {}", id, blog.getReadCount());
+        } else {
+            logger.warn("尝试更新不存在的博客阅读量，ID: {}", id);
+        }
+    }
 }

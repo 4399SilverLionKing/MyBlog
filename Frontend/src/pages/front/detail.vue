@@ -38,6 +38,9 @@ async function loadBlogDetail() {
   try {
     // 检查store中是否有当前博客和ID
     if (currentBlog.value && currentBlog.value.id) {
+      // 增加阅读量
+      await blogStore.updateReadCount(currentBlog.value.id)
+
       try {
         // 使用store方法获取博客内容
         const contentResult = await blogStore.getBlogContent(currentBlog.value.id)

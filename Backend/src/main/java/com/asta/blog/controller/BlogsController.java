@@ -51,4 +51,13 @@ public class BlogsController{
         service.DeleteBlog(id);
         return JsonVO.success(null);
     }
+
+    /**
+     * 更新博客阅读量（公共接口，无需权限认证）
+     */
+    @PostMapping("public/blogs/read-count/{id}")
+    public JsonVO<Object> updateBlogReadCount(@PathVariable Integer id) {
+        service.updateBlogReadCount(id);
+        return JsonVO.success(null);
+    }
 }

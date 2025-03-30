@@ -7,6 +7,7 @@ import {
   deleteBlog,
   getBlogList,
   putBlog,
+  updateBlogReadCount,
 } from '~/apis/blogApi'
 import { getSignedDownloadUrl, postBlogContent, updateBlogContent } from '~/apis/qiniuApi'
 
@@ -214,22 +215,12 @@ export const useBlogStore = defineStore('blog', () => {
       if (!blog)
         return
 
-      // 创建要更新的博客对象，只包含必要的字段
-      const blogData: BlogApiInterface = {
-        id: blog.id,
-        readCount: (blog.readCount || 0) + 1,
-      }
-
-      const res = await putBlog(blogData)
+      // 使用新的公共接口更新阅读量
+      const res = await updateBlogReadCount(id)
       if (res.code === 10000) {
         // 更新本地博客列表中的阅读量
         if (blog) {
-          blog.readCount += 1
-        }
-
-        // 更新当前博客的阅读量（如果当前显示的正是这篇博客）
-        if (currentBlog.value && currentBlog.value.id === id) {
-          currentBlog.value.readCount += 1
+          blog.readCount = (blog.readCount || 0) + 1
         }
       }
       return res

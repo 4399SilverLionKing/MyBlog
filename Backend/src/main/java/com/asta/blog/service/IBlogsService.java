@@ -54,4 +54,9 @@ public interface IBlogsService extends IService<Blogs> {
      */
     public void DeleteBlog(Integer id);
 
+    /**
+     * 更新博客阅读量
+     * @param id 博客id
+     */
+    public void updateBlogReadCount(Integer id);
 }

@@ -1,8 +1,6 @@
 package com.asta.blog.service.impl;
 
 import jakarta.annotation.Resource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,8 +20,6 @@ import java.util.stream.Collectors;
  */
 @Service 
 public class MyUserDetailsService implements UserDetailsService {
-
-    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
     @Resource
     private UsersMapper userMapper;

@@ -51,6 +51,13 @@ export function getBlogList(params: BlogListParams) {
 }
 
 /**
+ * 更新博客阅读量（公共接口，无需权限认证）
+ */
+export function updateBlogReadCount(id: number) {
+  return post<ApiResponse<null>>(`/public/blogs/read-count/${id}`)
+}
+
+/**
  * 创建博客
  */
 export function createBlog(blog: BlogApiInterface) {
