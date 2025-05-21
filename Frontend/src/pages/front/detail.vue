@@ -78,8 +78,9 @@ async function loadBlogDetail() {
                 paragraphBeginningSpace: true, // 段落开始时保留空格，有助于保持左对齐
               },
               hljs: {
-                style: 'monokai', // 代码高亮主题
+                style: 'github', // 代码高亮主题
                 lineNumber: true,
+                enable: true, // 确保启用代码高亮
               },
               after: () => {
                 // Markdown渲染完成后的回调
@@ -89,6 +90,10 @@ async function loadBlogDetail() {
                   const codeBlocks = previewElement.querySelectorAll('pre code')
                   codeBlocks.forEach((block) => {
                     block.classList.add('text-left')
+                    // 确保每个代码块添加hljs类
+                    if (!block.classList.contains('hljs')) {
+                      block.classList.add('hljs')
+                    }
                   })
                 }
               },

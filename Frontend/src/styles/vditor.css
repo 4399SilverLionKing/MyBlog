@@ -1,20 +1,46 @@
 /* 自定义Vditor样式以匹配深色主题 */
+:root {
+  /* 基础颜色 */
+  --vd-text-color: #f1f5f9;
+  --vd-bg-dark: rgba(15, 23, 42, 0.85);
+  --vd-bg-medium: rgba(30, 41, 59, 0.65);
+  --vd-bg-light: rgba(51, 65, 85, 0.7);
+  --vd-border-color: rgba(255, 255, 255, 0.15);
+
+  /* 标题颜色 - 更鲜艳的对比色 */
+  --vd-heading-1: #10b981; /* 更鲜艳的绿色 */
+  --vd-heading-2: #ec4899; /* 更鲜艳的粉色 */
+  --vd-heading-3: #a855f7; /* 更鲜艳的紫色 */
+  --vd-heading-4: #3b82f6; /* 更鲜艳的蓝色 */
+  --vd-heading-5: #f97316; /* 更鲜艳的橙色 */
+  --vd-heading-6: #84cc16; /* 更鲜艳的黄绿色 */
+
+  /* 元素颜色 */
+  --vd-link: #38bdf8;
+  --vd-link-hover: #7dd3fc;
+  --vd-blockquote-border: #8b5cf6;
+  --vd-table-header: #fbbf24;
+
+  /* 背景高亮 */
+  --vd-highlight-bg: rgba(139, 92, 246, 0.15);
+}
+
 .vditor-reset {
-  color: #e5e7eb;
+  color: var(--vd-text-color);
   font-family: 'Inter', sans-serif;
   line-height: 1.7;
   font-size: 1.05rem;
   text-align: left;
 }
 
+/* 标题样式加强 */
 .vditor-reset h1,
 .vditor-reset h2,
 .vditor-reset h3,
 .vditor-reset h4,
 .vditor-reset h5,
 .vditor-reset h6 {
-  color: white;
-  border-bottom-color: rgba(255, 255, 255, 0.1);
+  border-bottom-color: var(--vd-border-color);
   margin-top: 1.7em;
   margin-bottom: 1em;
   line-height: 1.4;
@@ -25,79 +51,95 @@
 
 .vditor-reset h1 {
   font-size: 2.2em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--vd-heading-1);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.4);
   margin-bottom: 0.8em;
-  text-align: left;
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
 }
 
 .vditor-reset h2 {
   font-size: 1.8em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  text-align: left;
+  color: var(--vd-heading-2);
+  border-bottom: 1px solid rgba(236, 72, 153, 0.4);
+  text-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
 }
 
 .vditor-reset h3 {
   font-size: 1.5em;
-  text-align: left;
+  color: var(--vd-heading-3);
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
 }
 
 .vditor-reset h4 {
   font-size: 1.3em;
-  text-align: left;
+  color: var(--vd-heading-4);
+  text-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
 }
 
 .vditor-reset h5 {
   font-size: 1.15em;
-  text-align: left;
+  color: var(--vd-heading-5);
+  text-shadow: 0 0 15px rgba(249, 115, 22, 0.3);
 }
 
 .vditor-reset h6 {
   font-size: 1em;
-  color: #d1d5db;
-  text-align: left;
+  color: var(--vd-heading-6);
+  text-shadow: 0 0 15px rgba(132, 204, 22, 0.3);
 }
 
+/* 链接样式增强 */
 .vditor-reset a {
-  color: #5eead4;
+  color: var(--vd-link);
   text-decoration: none;
-  border-bottom: 1px dashed rgba(94, 234, 212, 0.5);
-  transition: color 0.2s ease;
+  border-bottom: 1px dashed rgba(56, 189, 248, 0.5);
+  transition:
+    color 0.2s ease,
+    border-bottom 0.2s ease,
+    background-color 0.2s ease;
+  padding: 0 0.2em;
 }
 
 .vditor-reset a:hover {
-  color: #34d399;
-  border-bottom: 1px dashed rgba(52, 211, 153, 0.7);
+  color: var(--vd-link-hover);
+  border-bottom: 1px dashed rgba(125, 211, 252, 0.7);
+  background-color: rgba(56, 189, 248, 0.1);
+  border-radius: 2px;
 }
 
+/* 引用块样式增强 */
 .vditor-reset blockquote {
-  border-left: 4px solid rgba(94, 234, 212, 0.5);
-  background-color: rgba(30, 41, 59, 0.5);
+  border-left: 4px solid var(--vd-blockquote-border);
+  background-color: var(--vd-bg-medium);
   padding: 1em 1.2em;
   margin: 1.5em 0;
   border-radius: 0 0.3em 0.3em 0;
-  text-align: left;
+  box-shadow: inset 0 0 10px rgba(139, 92, 246, 0.1);
 }
 
+/* 代码块增强 */
 .vditor-reset pre {
-  background-color: rgba(15, 23, 42, 0.7);
+  background-color: var(--vd-bg-dark);
   padding: 1.2em;
   border-radius: 0.5em;
   margin: 1.5em 0;
   overflow-x: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* 修改内联代码的样式 */
 .vditor-reset code {
-  background-color: rgba(30, 41, 59, 0.5);
-  color: #5eead4;
+  background-color: rgba(30, 41, 59, 0.7);
+  color: #ec4899;
   padding: 0.2em 0.4em;
   border-radius: 0.3em;
-  font-family: 'Consolas', monospace;
+  font-family: 'Consolas', 'Menlo', monospace;
   font-size: 0.9em;
-  text-align: left;
+  border: 1px solid rgba(236, 72, 153, 0.2);
 }
 
+/* 修改代码块内代码的样式 */
 .vditor-reset pre code {
   background-color: transparent;
   padding: 0;
@@ -105,82 +147,266 @@
   font-size: 0.95em;
   line-height: 1.6;
   display: block;
-  text-align: left;
+  color: #f8f8f2;
+  border: none;
 }
 
 .vditor-reset pre code * {
   text-align: left;
 }
 
+/* 表格样式增强 */
 .vditor-reset table {
   border-collapse: collapse;
   margin: 1.5em 0;
   width: 100%;
   border-radius: 0.5em;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--vd-border-color);
 }
 
 .vditor-reset th {
-  background-color: rgba(30, 41, 59, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: var(--vd-bg-light);
+  border: 1px solid var(--vd-border-color);
   padding: 0.75em 1em;
   text-align: left;
   font-weight: 600;
+  color: var(--vd-table-header);
 }
 
 .vditor-reset td {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--vd-border-color);
   padding: 0.75em 1em;
-  background-color: rgba(15, 23, 42, 0.3);
-  text-align: left;
+  background-color: var(--vd-bg-dark);
 }
 
 .vditor-reset tr:nth-child(even) td {
-  background-color: rgba(15, 23, 42, 0.5);
+  background-color: rgba(15, 23, 42, 0.7);
 }
 
+/* 列表样式增强 */
 .vditor-reset ul,
 .vditor-reset ol {
   padding-left: 2em;
   margin: 1em 0;
-  text-align: left;
 }
 
 .vditor-reset li {
   margin: 0.5em 0;
-  text-align: left;
+  position: relative;
 }
 
+.vditor-reset ul li::marker {
+  color: #a855f7;
+}
+
+.vditor-reset ol li::marker {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+/* 图片样式增强 */
 .vditor-reset img {
   max-width: 100%;
   border-radius: 0.5em;
   margin: 1.5em 0;
   display: block;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--vd-border-color);
+  transition: transform 0.3s ease;
+}
+
+.vditor-reset img:hover {
+  transform: scale(1.01);
 }
 
 .vditor-reset hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--vd-border-color);
   margin: 2em 0;
+  position: relative;
+}
+
+.vditor-reset hr::after {
+  content: '';
+  display: block;
+  width: 10%;
+  height: 3px;
+  background: var(--vd-blockquote-border);
+  position: absolute;
+  top: -2px;
+  left: 45%;
+  border-radius: 3px;
 }
 
 .vditor-reset p {
   margin: 1em 0;
-  text-align: left;
 }
 
-/* 确保代码内的所有内容也是左对齐 */
+/* 代码高亮样式增强 */
 .hljs {
-  text-align: left !important;
+  background: transparent !important;
+  color: #f8f8f2 !important;
 }
 
 .hljs * {
   text-align: left !important;
 }
 
-/* 覆盖可能的其他样式 */
-.vditor-reset * {
+/* 基于Monokai的代码高亮风格 - 更鲜艳的颜色 */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-tag {
+  color: #ff4d94 !important; /* 更亮的粉红色 */
+  font-weight: bold !important;
+}
+
+.hljs-built_in,
+.hljs-link,
+.hljs-section,
+.hljs-type {
+  color: #38bdf8 !important; /* 鲜艳的蓝色 */
+  font-weight: bold !important;
+}
+
+.hljs-addition,
+.hljs-attr,
+.hljs-bullet,
+.hljs-name,
+.hljs-string,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-variable {
+  color: #86efac !important; /* 亮绿色 */
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #94a3b8 !important; /* 更明亮的灰色 */
+  font-style: italic !important;
+}
+
+.hljs-literal,
+.hljs-number,
+.hljs-quote,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #c084fc !important; /* 亮紫色 */
+}
+
+.hljs-attribute,
+.hljs-title {
+  color: #fb923c !important; /* 亮橙色 */
+  font-weight: bold !important;
+}
+
+.hljs-doctag,
+.hljs-formula,
+.hljs-selector-pseudo {
+  color: #e879f9 !important; /* 亮粉紫色 */
+}
+
+.hljs-params {
+  color: #fdba74 !important; /* 浅橙色 */
+}
+
+.hljs-function .hljs-title {
+  color: #a3e635 !important; /* 亮黄绿色 */
+  font-weight: bold !important;
+}
+
+.hljs-subst {
+  color: #f1f5f9 !important; /* 亮白色 */
+}
+
+.hljs-emphasis {
+  font-style: italic !important;
+}
+
+.hljs-strong {
+  font-weight: bold !important;
+}
+
+/* 代码行号样式 */
+.hljs-ln {
+  border-collapse: collapse !important;
+}
+
+.hljs-ln td {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.hljs-ln-n {
+  color: #64748b !important; /* 更明亮的行号颜色 */
+  padding-right: 0.8em !important;
+  text-align: right !important;
+  user-select: none !important;
+  border-right: 1px solid rgba(100, 116, 139, 0.3) !important;
+  margin-right: 0.8em !important;
+}
+
+/* 确保这些样式被应用 */
+.vditor-reset pre code.language-javascript,
+.vditor-reset pre code.language-js,
+.vditor-reset pre code.language-html,
+.vditor-reset pre code.language-css,
+.vditor-reset pre code.language-xml,
+.vditor-reset pre code.language-typescript,
+.vditor-reset pre code.language-ts,
+.vditor-reset pre code.language-php,
+.vditor-reset pre code.language-python,
+.vditor-reset pre code.language-ruby,
+.vditor-reset pre code.language-java,
+.vditor-reset pre code.language-c,
+.vditor-reset pre code.language-cpp,
+.vditor-reset pre code.language-csharp,
+.vditor-reset pre code.language-go,
+.vditor-reset pre code.language-rust,
+.vditor-reset pre code.language-shell,
+.vditor-reset pre code.language-bash,
+.vditor-reset pre code.language-diff,
+.vditor-reset pre code.language-json,
+.vditor-reset pre code.language-markdown,
+.vditor-reset pre code.language-md {
+  color: #f8f8f2 !important;
+  background: transparent !important;
+}
+
+/* 针对移动设备的响应式调整 */
+@media (max-width: 768px) {
+  .vditor-reset {
+    font-size: 0.95rem;
+  }
+
+  .vditor-reset h1 {
+    font-size: 1.8em;
+  }
+
+  .vditor-reset h2 {
+    font-size: 1.5em;
+  }
+
+  .vditor-reset h3 {
+    font-size: 1.3em;
+  }
+
+  .vditor-reset pre {
+    padding: 1em;
+  }
+
+  .vditor-reset blockquote {
+    padding: 0.8em 1em;
+  }
+}
+
+/* 减少重复的text-align:left声明 */
+.vditor-reset,
+.vditor-reset *,
+.hljs,
+.hljs * {
   text-align: left;
 }

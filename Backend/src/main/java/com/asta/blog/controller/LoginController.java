@@ -4,8 +4,6 @@ import com.asta.blog.models.dto.LoginDTO;
 import com.asta.blog.models.vo.ResultStatus;
 import com.asta.blog.service.impl.MyUserDetailsService;
 import com.asta.blog.utils.JwtUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,8 +21,6 @@ import java.util.Map;
 
 @RestController
 public class LoginController {
-
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private MyUserDetailsService userDetailsService;

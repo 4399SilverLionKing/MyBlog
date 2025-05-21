@@ -30,7 +30,7 @@ const searchQuery = computed({
   set: (value: string) => blogStore.setSearchQuery(value),
 })
 
-// 使用store的filteredBlogs getter
+// 直接使用store中的filteredBlogs
 const filteredBlogs = computed(() => blogStore.filteredBlogs)
 
 function setCategory(category: string) {

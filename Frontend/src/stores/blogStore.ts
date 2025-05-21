@@ -36,16 +36,24 @@ export const useBlogStore = defineStore('blog', () => {
   // Getters
   const filteredBlogs = computed(() => {
     return blogs.value.filter((blog) => {
-      // 优化类别匹配逻辑
+      // 首先获取已按分类筛选的博客
+      // 分类匹配逻辑
       const matchCategory = activeCategory.value === 'all'
         || blog.category === activeCategory.value
 
-      // 搜索匹配逻辑
-      const matchSearch = searchQuery.value === ''
-        || blog.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-        || blog.subtitle.toLowerCase().includes(searchQuery.value.toLowerCase())
+      // 搜索匹配逻辑：匹配标题、副标题或标签
+      const query = searchQuery.value.toLowerCase()
+      const matchSearch = query === ''
+        || blog.title.toLowerCase().includes(query)
+        || blog.subtitle.toLowerCase().includes(query)
+        || (blog.tags && blog.tags.some(tag => tag.toLowerCase().includes(query)))
 
       return matchCategory && matchSearch
+    }).sort((a, b) => {
+      // 按修改时间（日期）降序排序，最新的排在前面
+      const dateA = new Date(a.date).getTime()
+      const dateB = new Date(b.date).getTime()
+      return dateB - dateA
     })
   })
 
