@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: 1263976832
-    url: jdbc:mysql://182.92.222.108:3306/blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://59.110.136.15:3306/blog?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -23,15 +23,7 @@ spring:
       maxPoolPreparedStatementPerConnectionSize: 20 # 每个连接可以创建的最大预编译语句
       useGlobalDataSourceStat: true # 开启全局数据源统计功能
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500 # 开启SQL合并，设置慢SQL的阈值
-data:
-    redis:
-      port: 6379
-      host: 182.92.222.108
-      jedis:
-        pool:
-          max-active: 8 #最大连接数
-          max-wait: -1 #最大阻塞等待时间
-          max-idle: 8 #最大空闲连接
+
 server:
   port: 4444
 jwt:

@@ -44,16 +44,6 @@
 			<artifactId>druid</artifactId>
 			<version>1.2.22</version>
 		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.6</version>
-		</dependency>
-		<!-- redis -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
 		<!-- guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -170,11 +160,12 @@
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.40.2</version>
 				<configuration>
 					<!-- Docker 远程管理地址-->
-					<dockerHost>https://182.92.222.108:2375</dockerHost>
+					<dockerHost>https://59.110.136.15:2375</dockerHost>
 					<!-- CA 证书位置 -->
-					<certPath>D:\Docker\blog-backend-ca</certPath>
+					<certPath>D:\Docker\blog-frontend-ca</certPath>
 					<!-- 镜像设置 -->
 					<images>
 						<image>
